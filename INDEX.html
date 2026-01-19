@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zero Knowledge Age Verification</title>
+
+  <!-- CSS MUST be inside <style> -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      background: #22c55e;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2>Zero Knowledge Age Verification</h2>
+    <p>No DOB. No Aadhaar Number. Only Age Proof.</p>
+
+    <input type="date" id="dob">
+    <button onclick="verifyAge()">Verify Age</button>
+
+    <div id="result"></div>
+  </div>
+
+  <!-- JS MUST be inside <script> -->
+  <script>
+    function verifyAge() {
+      const dob = document.getElementById("dob").value;
+      const result = document.getElementById("result");
+
+      if (!dob) {
+        result.innerHTML = "Please enter DOB";
+        return;
+      }
+
+      const birthDate = new Date(dob);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const m = today.getMonth() - birthDate.getMonth();
+
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      if (age >= 18) {
+        result.innerHTML = "✅ Age Verified: Above 18";
+      } else {
+        result.innerHTML = "❌ Age Not Verified: Under 18";
+      }
+    }
+  </script>
+
+</body>
+</html>
